@@ -1,8 +1,21 @@
+function assert(condition: boolean, message: string): asserts condition {
+    if (!condition) {
+        throw Error(message);
+    }
+}
+
+function assertIsNumber(value: unknown, name: string): asserts value is number {
+    if (typeof value !== 'number') {
+        throw Error(`Expected ${name} to be a number`);
+    }
+}
+
 function range(from: number, to: number): number[];
 function range(from: unknown, to: unknown): number[] {
-    if (typeof from !== 'number' || typeof to !== 'number') {
-        throw Error('createArr expects exactly 2 numbers');
-    }
+    assert(typeof from === 'number' && typeof to === 'number', 'assert');
+    // assertIsNumber(from, 'from');
+    // assertIsNumber(to, 'to');
+
     let numArr: number[] = [];
     for (let indexNum = from; indexNum < to; indexNum++) {
         numArr.push(indexNum);
@@ -10,5 +23,5 @@ function range(from: unknown, to: unknown): number[] {
     return numArr;
 }
 
-let numArr: number[] = range(1, 10);
+let numArr: number[] = range('A' as any, 'F' as any);
 console.log(numArr);
